@@ -19,7 +19,7 @@ For me, I set the Adafruit notification interval to 10 minutes.  In `config.py`,
 
 You'll need the following 5 components to build this device:
 
-1. An Expressif ESP MCU - I've chosen the Lolin/Wemos ESP32C3[https://www.wemos.cc/en/latest/c3/c3_mini.html] /url Lolin/Wemos ESP32C3 board for ~ $4.  An ESP8266 works equally well.
+1. An Expressif ESP MCU - I've chosen [the Lolin/Wemos ESP32C3 board](https://www.wemos.cc/en/latest/c3/c3_mini.html) for ~ $4.  An ESP8266 works equally well.
 
 2. Micropython - you can download it for the above board [here](https://micropython.org/download/LOLIN_C3_MINI/).  You'll need `esptool` and `ampy` tools to flash micropython and upload 
 your python scripts.  Use your favorite serial connectivity tool (putty.exe, screen, etc.).
