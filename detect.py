@@ -60,7 +60,7 @@ try :
    f = open('clock', 'r'); last_time = int(f.read()); f.close()
 except :
    f = open('clock', 'w'); f.write(str(current_time)); f.close()
-   last_time = 0  # first time run
+   last_time = current_time    # first time run
 delta = current_time - last_time
 print('Delta:', delta)
 if delta > config.DELTA :
@@ -68,8 +68,6 @@ if delta > config.DELTA :
 while True:
    # post and record current time
    current_time = utime.mktime(utime.localtime()) 
-   f = open('clock', 'w')
-   f.write(str(current_time))
-   f.close()
+   f = open('clock', 'w'); f.write(str(current_time)); f.close()
    do_post(current_time)
    utime.sleep(config.INTERVAL)

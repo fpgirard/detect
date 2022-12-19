@@ -22,7 +22,7 @@ usb_height = case_wall + foot_height + 1.5;
 i2_height = 5.5;
 reset_d = 2;
 reset_width = 2;
-reset_height = case_wall + foot_height + .5;
+reset_height = case_wall + foot_height + 1;
 
 post_h = 6.4;
 
