@@ -31,7 +31,10 @@ def do_connect():
 	wlan.active(True)
 	if not wlan.isconnected():
 		print('Connecting to Network...')
-		wlan.connect(SSID, password)
+                try:
+		    wlan.connect(SSID, password)
+                except:
+                    pass
 		while not wlan.isconnected():
 			pass
 	print('Network Configuration (IP/GW/DNS1/DNS2): ', wlan.ifconfig())
@@ -40,15 +43,43 @@ def do_post(current_time):
    url='https://io.adafruit.com/api/v2/'+user+'/feeds/'+feed+'/data.json'
    data = json.dumps({"value": current_time})
    # POST response
-   response = urequests.post(url, headers=headers, data=data)
-   response.close()
+   try:
+      response = urequests.post(url, headers=headers, data=data)
+   except OSError as e:
+      print("OS error: {0}".format(e))
+      utime.sleep(30)
+      pass
+   except IndexError as e:
+      # See: https://github.com/micropython/micropython-lib/issues/300
+      print("Index Error using urequests: {0}".format(e))
+      utime.sleep(30)
+      pass
+   else:
+      response.close()
+
 def ifttt_it(current_time):
    url= 'https://maker.ifttt.com/trigger/'+event+'/with/key/'+key
    headers = {'Content-Type': 'application/json'}
    data = json.dumps({"value1": current_time//60}) # in minutes not seconds
    # POST response
-   response = urequests.post(url, headers=headers, data=data)
-   response.close()
+   response = None
+   while response.status_code != 200 :
+      try:
+         response = urequests.post(url, headers=headers, data=data)
+      except OSError as e:
+         print("OS error: {0}".format(e))
+         utime.sleep(30)
+         pass
+      except IndexError as e:
+         # This should not occur if we ensure that we are connected to the
+         # wireless network...
+         # See: https://github.com/micropython/micropython-lib/issues/300
+         print("Index Error using urequests: {0}".format(e))
+         utime.sleep(30)
+         pass
+      else:
+         response.close()
+
 # Timer for recalibrating NTP once a day
 ntp_timer = Timer(0)
 ntp_timer.init(period=1000*60*60*24, mode=Timer.PERIODIC, callback=set_time)
