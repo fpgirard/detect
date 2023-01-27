@@ -18,26 +18,30 @@ feed = config.FEED
 # IFTTT 
 key = config.IFTTT_KEY
 event = config.EVENT
+interval = config.INTERVAL
+
 # set NTP server
 ntptime.host = config.NTP_SERVER
 def set_time():
    try:
-         ntptime.settime()
+      ntptime.settime()
    except OSError as e:
-         print("Failed ntp request - Error: {0}".format(e))
+      print("Failed ntp request - Error: {0}".format(e))
    return utime.mktime(utime.localtime())        
+
 def do_connect():
-	wlan = network.WLAN(network.STA_IF) 
-	wlan.active(True)
-	if not wlan.isconnected():
-		print('Connecting to Network...')
-                try:
-		    wlan.connect(SSID, password)
-                except:
-                    pass
-		while not wlan.isconnected():
-			pass
-	print('Network Configuration (IP/GW/DNS1/DNS2): ', wlan.ifconfig())
+   wlan = network.WLAN(network.STA_IF) 
+   wlan.active(True)
+   while not wlan.isconnected():
+      print('Connecting to Network...')
+      try:
+         wlan.connect(SSID, password)
+      except:
+         utime.sleep(2)
+         pass
+   else:
+      print('Network Configuration (IP/GW/DNS1/DNS2): ', wlan.ifconfig())
+
 def do_post(current_time):
    headers = {'X-AIO-Key': X_AIO_Key,'Content-Type': 'application/json'}
    url='https://io.adafruit.com/api/v2/'+user+'/feeds/'+feed+'/data.json'
@@ -102,4 +106,4 @@ while True:
    current_time = utime.mktime(utime.localtime()) 
    f = open('clock', 'w'); f.write(str(current_time)); f.close()
    do_post(current_time)
-   utime.sleep(config.INTERVAL)
+   utime.sleep(interval)
