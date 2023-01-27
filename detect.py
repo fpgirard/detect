@@ -62,8 +62,8 @@ def ifttt_it(current_time):
    headers = {'Content-Type': 'application/json'}
    data = json.dumps({"value1": current_time//60}) # in minutes not seconds
    # POST response
-   response = None
-   while response.status_code != 200 :
+   sent = False
+   while not sent :
       try:
          response = urequests.post(url, headers=headers, data=data)
       except OSError as e:
@@ -78,6 +78,7 @@ def ifttt_it(current_time):
          utime.sleep(30)
          pass
       else:
+         sent = True
          response.close()
 
 # Timer for recalibrating NTP once a day
