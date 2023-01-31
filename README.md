@@ -7,7 +7,7 @@ After a bit of toying with it, I decided that a more light-weight version of But
 
 ## Purpose
 
-There two outage scenarios that I wanted to capture:
+There are two outage scenarios that I wanted to capture:
 
 1. First, I wanted to use Adafruit's feed notification system to notify me when it had not received an HTTP response from my device within a specified period of time.  Adafruit IO allows free accounts to send notifications if no updates have been posted in 10 minutes, 30 minutes, 1 hour, or 1 day.  This 'online' feed feature is really nice.  For the free Adafruit IO accounts, it's email only but for our purposes, this is quite sufficient.
 
