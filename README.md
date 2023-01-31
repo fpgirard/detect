@@ -13,7 +13,7 @@ There are two outage scenarios that I wanted to capture:
 
 2. _Outage Length_ - The code, all ~100 lines of it, also tracks the epoch time.    When power resumes, it calculates how much time has passed since the last recorded time and will post to IFTTT this delta if it exceeds a value that you set in `config.py`.  I report the outage time in IFTTT's _value1_ field and my "Then" action is to have Alexa notify me of the outage length.
 
-For me, I set the Adafruit notification interval to 10 minutes.  In `config.py`, I also set the Adafruit posting interval to 30 seconds and the outage interval to 30 minutes.   I also have this feed emailing my gmail account which has a rule that if the sender is notify@io.adafruit.com, it forwards the email to my AT&T SMTP-to-SMS gateway - 3015551212@txt.att.net and I get an SMS alert.
+In `config.py`, I set the Adafruit posting interval to 30 seconds and the outage interval to 10 minutes.   I also have this feed emailing my gmail account which has a rule that if the sender is notify@io.adafruit.com, it forwards the email to my AT&T SMTP-to-SMS gateway - 3015551212@txt.att.net and I get an SMS alert. For IFTTT notifications, I set the delta outage length to 30 minutes as I want to know about any outage that lasts longer than that time interval.
 
 ## Requirements
 
